@@ -2,6 +2,12 @@
 
 Serious Game Rempart Vie
 
-#Test
+22/01/2018 - 18:30
+First version of the game : proof of concept - catching stocks
+Edited files :
 
-ceci est un test
+* Background.js
+* Components.js
+* Game.js
+* script.js => old file
+* index.html (scipts)
