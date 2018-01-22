@@ -44,7 +44,13 @@ function Player(speed, source, x, y, width, height) {
       this.left() > stock.right()
     );
   };
-  this.shoot = function() {};
+  this.shoot = function(spaceBar) {
+    // if (spaceBar === "spaceBar") {
+    //   return true;
+    // } else {
+    //   return false;
+    // }
+  };
 }
 Player.prototype = Object.create(Component.prototype);
 
@@ -59,18 +65,21 @@ function Stock(stockSpeed, source, x, y, width, height) {
 Stock.prototype = Object.create(Component.prototype);
 
 // Shoot class inherited from Object class
-function Bullet() {
-  Component.call(bulletSpeed, source, x, y, width, height);
+function Bullet(bulletSpeed, source, x, y, width, height) {
+  Component.call(this, source, x, y, width, height);
   this.speedY = bulletSpeed;
   this.move = function() {
     this.y += this.speedY;
   };
-  this.checkKillStock = function() {
-    return !(
-      this.bottom() < stock.top() ||
-      this.top() > stock.bottom() ||
-      this.right() < stock.left() ||
-      this.left() > stock.right()
+  this.checkKillStock = function(stock) {
+    return (
+      stock /* to solve the i = length problem */ &&
+      !(
+        this.bottom() < stock.top() ||
+        this.top() > stock.bottom() ||
+        this.right() < stock.left() ||
+        this.left() > stock.right()
+      )
     );
   };
 }
