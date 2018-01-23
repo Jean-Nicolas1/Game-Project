@@ -1,11 +1,11 @@
 var background;
 var player;
 var sectors = [
-  "./images/car.png",
-  "./images/airplane.png",
-  "./images/barrel.png"
+  { image: "./images/car.png", status: "long", value: 1 },
+  { image: "./images/airplane.png", status: "short", value: 2 },
+  { image: "./images/barrel.png", status: "long", value: 3 }
 ];
-
+var score = 0;
 window.onload = function() {
   document.getElementById("start-button").onclick = function() {
     document.getElementById("title").style.display = "none";
@@ -45,6 +45,23 @@ window.onload = function() {
     },
     clear: function() {
       this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    },
+    displayScore: function() {
+      this.context.font = "38px serif";
+      this.context.fillStyle = "black";
+      this.context.fillText("Score: " + score, 20, 50);
+    },
+    stop: function() {
+      //...
+    },
+    gameOver: function() {
+      //...
+    },
+    drawFinalPoints: function() {
+      //...
+    },
+    restartGame: function() {
+      //...
     }
   };
 
@@ -56,8 +73,22 @@ window.onload = function() {
         Math.floor(Math.random() * myGameArea.canvas.width)
       );
     var y = 0;
-    var sector = sectors[Math.floor(Math.random() * sectors.length)];
-    myGameArea.myStocks.push(new Stock(3, sector, x, y, width, height));
+    var randomSector = Math.floor(Math.random() * sectors.length);
+    // var sectorImage = sectors[Math.floor(Math.random() * sectors.length)][0];
+    // var sectorStatus = 0;
+    // var sectorValue = 0;
+    myGameArea.myStocks.push(
+      new Stock(
+        3,
+        sectors[randomSector].image,
+        x,
+        y,
+        width,
+        height,
+        sectors[randomSector].status,
+        sectors[randomSector].value
+      )
+    );
   }
 
   function shootBullet(width, height) {
@@ -72,6 +103,11 @@ window.onload = function() {
     // Removing catched stocks from array
     for (i = 0; i < myGameArea.myStocks.length; i++) {
       if (player.checkCatchStock(myGameArea.myStocks[i])) {
+        if (myGameArea.myStocks[i].status === "short") {
+          score -= myGameArea.myStocks[i].value;
+        } else {
+          score += myGameArea.myStocks[i].value;
+        }
         myGameArea.myStocks.splice(i, 1);
       }
     }
@@ -79,6 +115,11 @@ window.onload = function() {
     for (i = 0; i < myGameArea.myStocks.length; i++) {
       for (j = 0; j < myGameArea.myBullets.length; j++) {
         if (myGameArea.myBullets[j].checkKillStock(myGameArea.myStocks[i])) {
+          if (myGameArea.myStocks[i].status === "short") {
+            score += myGameArea.myStocks[i].value;
+          } else {
+            score -= myGameArea.myStocks[i].value;
+          }
           myGameArea.myStocks.splice(i, 1);
           myGameArea.myBullets.splice(j, 1);
           myGameArea.myBarrel.push("bullet");
@@ -100,6 +141,8 @@ window.onload = function() {
     }
     // Positioning stocks
     if (myGameArea.frames % 60 === 0) {
+      // var stockStatus = ["short", "long"];
+      // var stockValues = [1, 2, 3];
       createStocks(30, 30);
     }
     // Clearing Canvas
@@ -121,6 +164,8 @@ window.onload = function() {
     });
     // Drawing the player
     player.update(myGameArea.context);
+    // Displaying score
+    myGameArea.displayScore();
     // Creating bullets
     // -- see line 128 --
     document.onkeypress = function() {

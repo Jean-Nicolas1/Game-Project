@@ -2,6 +2,13 @@
 
 Serious Game Rempart Vie
 
+23/01/2018 - 15:45
+V1.2 - score - sector status and values
+Edited files :
+
+* Components.js
+* Game.js
+
 23/01/2018 - 12:30
 V1.1 - limitation of bullet number - out of scope objects management - various stocks
 Edited files :

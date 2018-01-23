@@ -55,9 +55,11 @@ function Player(speed, source, x, y, width, height) {
 Player.prototype = Object.create(Component.prototype);
 
 // Stock class inherited from Object class
-function Stock(stockSpeed, source, x, y, width, height) {
+function Stock(stockSpeed, source, x, y, width, height, status, value) {
   Component.call(this, source, x, y, width, height);
   this.speedY = stockSpeed;
+  this.status = status;
+  this.value = value;
   this.move = function() {
     this.y += this.speedY;
   };
