@@ -1,5 +1,10 @@
 var background;
 var player;
+var sectors = [
+  "./images/car.png",
+  "./images/airplane.png",
+  "./images/barrel.png"
+];
 
 window.onload = function() {
   document.getElementById("start-button").onclick = function() {
@@ -19,12 +24,14 @@ window.onload = function() {
     player = new Player(8, "./images/player.png", 168, 660, 60, 30);
     myGameArea.myStocks = [];
     myGameArea.myBullets = [];
+    myGameArea.myBarrel = ["bullet", "bullet", "bullet", "bullet"];
   }
 
   var myGameArea = {
     canvas: document.createElement("canvas"),
     myStocks: [],
     myBullets: [],
+    myBarrel: [],
     frames: 0,
     drawCanvas: function() {
       this.canvas.width = 600; /*396 */
@@ -42,21 +49,20 @@ window.onload = function() {
   };
 
   function createStocks(width, height) {
-    x =
+    var x =
       player.width / 4 +
       Math.min(
         myGameArea.canvas.width - player.width,
         Math.floor(Math.random() * myGameArea.canvas.width)
       );
-    y = 0;
-    myGameArea.myStocks.push(
-      new Stock(3, "./images/EnergyStock.jpg", x, y, width, height)
-    );
+    var y = 0;
+    var sector = sectors[Math.floor(Math.random() * sectors.length)];
+    myGameArea.myStocks.push(new Stock(3, sector, x, y, width, height));
   }
 
   function shootBullet(width, height) {
-    x = player.x + player.width / 2 - width / 2;
-    y = player.y;
+    var x = player.x + player.width / 2 - width / 2;
+    var y = player.y;
     myGameArea.myBullets.push(
       new Bullet(-3, "./images/bullet.jpg", x, y, width, height)
     );
@@ -69,13 +75,27 @@ window.onload = function() {
         myGameArea.myStocks.splice(i, 1);
       }
     }
-    // Removing killed stocks from array
+    // Removing killed stocks and bullet from arrays and reloading the barrel
     for (i = 0; i < myGameArea.myStocks.length; i++) {
       for (j = 0; j < myGameArea.myBullets.length; j++) {
         if (myGameArea.myBullets[j].checkKillStock(myGameArea.myStocks[i])) {
           myGameArea.myStocks.splice(i, 1);
           myGameArea.myBullets.splice(j, 1);
+          myGameArea.myBarrel.push("bullet");
         }
+      }
+    }
+    // Removing out of game stocks
+    for (i = 0; i < myGameArea.myStocks.length; i++) {
+      if (myGameArea.myStocks[i].checkOutOfGame(myGameArea.canvas.height)) {
+        myGameArea.myStocks.splice(i, 1);
+      }
+    }
+    // Removing out of game bullets and reloading the barrel
+    for (i = 0; i < myGameArea.myBullets.length; i++) {
+      if (myGameArea.myBullets[i].checkOutOfGame()) {
+        myGameArea.myBullets.splice(i, 1);
+        myGameArea.myBarrel.push("bullet");
       }
     }
     // Positioning stocks
@@ -103,6 +123,12 @@ window.onload = function() {
     player.update(myGameArea.context);
     // Creating bullets
     // -- see line 128 --
+    document.onkeypress = function() {
+      if (event.keyCode === 32 && myGameArea.myBarrel.length > 0) {
+        shootBullet(10, 20);
+        myGameArea.myBarrel.splice(0, 1);
+      }
+    };
     // Drawing bullet
     myGameArea.myBullets.forEach(function(bullet) {
       bullet.y += bullet.speedY;
@@ -121,9 +147,9 @@ window.onload = function() {
   var RIGHT_KEY = 39;
   document.onkeydown = function(event) {
     // Shooting bullets -- here because can only have one document.onkeydown function
-    if (event.keyCode === 32) {
-      shootBullet(10, 20);
-    }
+    // if (event.keyCode === 32) {
+    //   shootBullet(10, 20);
+    // }
     switch (event.keyCode) {
       case LEFT_KEY:
         keysPressed.left = true;

@@ -61,6 +61,9 @@ function Stock(stockSpeed, source, x, y, width, height) {
   this.move = function() {
     this.y += this.speedY;
   };
+  this.checkOutOfGame = function(canvasHeight) {
+    return !(this.top() < canvasHeight);
+  };
 }
 Stock.prototype = Object.create(Component.prototype);
 
@@ -81,6 +84,9 @@ function Bullet(bulletSpeed, source, x, y, width, height) {
         this.left() > stock.right()
       )
     );
+  };
+  this.checkOutOfGame = function() {
+    return !(this.bottom() > 0);
   };
 }
 Bullet.prototype = Object.create(Component.prototype);

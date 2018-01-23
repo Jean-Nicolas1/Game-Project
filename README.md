@@ -2,6 +2,14 @@
 
 Serious Game Rempart Vie
 
+23/01/2018 - 12:30
+V1.1 - limitation of bullet number - out of scope objects management - various stocks
+Edited files :
+
+* Components.js
+* Game.js
+* New images
+
 22/01/2018 - 22:00
 First version of the game : proof of concept - catching & killing stocks
 Edited files :
