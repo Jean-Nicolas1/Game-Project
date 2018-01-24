@@ -92,3 +92,12 @@ function Bullet(bulletSpeed, source, x, y, width, height) {
   };
 }
 Bullet.prototype = Object.create(Component.prototype);
+
+// Year class
+// function Year (name, market ){
+//   this.name = name;
+//   this.market = {name:};
+//   this.size = size;
+//   this.speed = speed;
+//   this.informationFlow = informationFlow;
+// }

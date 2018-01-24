@@ -2,6 +2,14 @@
 
 Serious Game Rempart Vie
 
+24/01/2018 - 20:20
+V1.3 - context changing - Dataset creation - displaying indo
+Edited files :
+
+* Components.js
+* Game.js
+* Dataset.js
+
 23/01/2018 - 15:45
 V1.2 - score - sector status and values
 Edited files :

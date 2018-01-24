@@ -1,10 +1,3 @@
-var background;
-var player;
-var sectors = [
-  { image: "./images/car.png", status: "long", value: 1 },
-  { image: "./images/airplane.png", status: "short", value: 2 },
-  { image: "./images/barrel.png", status: "long", value: 3 }
-];
 var score = 0;
 window.onload = function() {
   document.getElementById("start-button").onclick = function() {
@@ -15,13 +8,15 @@ window.onload = function() {
 
   function startGame() {
     myGameArea.start();
-    background = new Background(
-      "./images/bg.jpg",
-      myGameArea.canvas.width,
-      myGameArea.canvas.height,
-      -0.5
+    background = new Background("./images/OLD/bg.jpg", myGameArea.canvas.width, myGameArea.canvas.height, 3);
+    player = new Player(
+      8,
+      "./images/player.png",
+      (myGameArea.canvas.width - 60) / 2,
+      myGameArea.canvas.height - 80,
+      60,
+      30
     );
-    player = new Player(8, "./images/player.png", 168, 660, 60, 30);
     myGameArea.myStocks = [];
     myGameArea.myBullets = [];
     myGameArea.myBarrel = ["bullet", "bullet", "bullet", "bullet"];
@@ -34,7 +29,7 @@ window.onload = function() {
     myBarrel: [],
     frames: 0,
     drawCanvas: function() {
-      this.canvas.width = 600; /*396 */
+      this.canvas.width = 500; /*396 */
       this.canvas.height = 0.8 * screen.height;
       this.context = this.canvas.getContext("2d");
       document.getElementById("game-board").append(this.canvas);
@@ -47,9 +42,17 @@ window.onload = function() {
       this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     },
     displayScore: function() {
-      this.context.font = "38px serif";
+      this.context.font = "20px serif";
       this.context.fillStyle = "black";
-      this.context.fillText("Score: " + score, 20, 50);
+      this.context.fillText("Score: " + score, 20, 30);
+      this.context.fillText("Année: " + year.name, myGameArea.canvas.width - 125, 30);
+      for (var i = 0; i < year.market.length; i++) {
+        this.context.fillText(year.messageGeneration()[i], 20, 60 + 30 * i);
+      }
+
+      // this.context.fillText(year.messageGeneration()[0], 20, 60);
+      // this.context.fillText(year.messageGeneration()[1], 20, 90);
+      // this.context.fillText(year.messageGeneration()[2], 20, 120);
     },
     stop: function() {
       //...
@@ -65,28 +68,22 @@ window.onload = function() {
     }
   };
 
-  function createStocks(width, height) {
+  function createStocks(width, height, market, speed) {
     var x =
       player.width / 4 +
-      Math.min(
-        myGameArea.canvas.width - player.width,
-        Math.floor(Math.random() * myGameArea.canvas.width)
-      );
+      Math.min(myGameArea.canvas.width - player.width / 2 - width, Math.floor(Math.random() * myGameArea.canvas.width));
     var y = 0;
-    var randomSector = Math.floor(Math.random() * sectors.length);
-    // var sectorImage = sectors[Math.floor(Math.random() * sectors.length)][0];
-    // var sectorStatus = 0;
-    // var sectorValue = 0;
+    var randomSector = Math.floor(Math.random() * market.length);
     myGameArea.myStocks.push(
       new Stock(
-        3,
-        sectors[randomSector].image,
+        speed,
+        market[randomSector].image,
         x,
         y,
         width,
         height,
-        sectors[randomSector].status,
-        sectors[randomSector].value
+        market[randomSector].status,
+        market[randomSector].value
       )
     );
   }
@@ -94,9 +91,7 @@ window.onload = function() {
   function shootBullet(width, height) {
     var x = player.x + player.width / 2 - width / 2;
     var y = player.y;
-    myGameArea.myBullets.push(
-      new Bullet(-3, "./images/bullet.jpg", x, y, width, height)
-    );
+    myGameArea.myBullets.push(new Bullet(-3, "./images/bullet.png", x, y, width, height));
   }
 
   function updateGameArea() {
@@ -130,6 +125,7 @@ window.onload = function() {
     for (i = 0; i < myGameArea.myStocks.length; i++) {
       if (myGameArea.myStocks[i].checkOutOfGame(myGameArea.canvas.height)) {
         myGameArea.myStocks.splice(i, 1);
+        score -= 1;
       }
     }
     // Removing out of game bullets and reloading the barrel
@@ -139,12 +135,17 @@ window.onload = function() {
         myGameArea.myBarrel.push("bullet");
       }
     }
-    // Positioning stocks
-    if (myGameArea.frames % 60 === 0) {
-      // var stockStatus = ["short", "long"];
-      // var stockValues = [1, 2, 3];
-      createStocks(30, 30);
+    // Changing of years stocks
+
+    if (myGameArea.frames % 1200 === 0) {
+      year = scenario[p % scenario.length];
+      p += 1;
     }
+    // Positioning stocks
+    if (myGameArea.frames % 60 === 0 && myGameArea.frames !== 0) {
+      createStocks(year.size, year.size, year.market, year.speed);
+    }
+
     // Clearing Canvas
     myGameArea.clear();
     // Drawing background --> disabled
@@ -167,10 +168,9 @@ window.onload = function() {
     // Displaying score
     myGameArea.displayScore();
     // Creating bullets
-    // -- see line 128 --
     document.onkeypress = function() {
       if (event.keyCode === 32 && myGameArea.myBarrel.length > 0) {
-        shootBullet(10, 20);
+        shootBullet(20, 20);
         myGameArea.myBarrel.splice(0, 1);
       }
     };
@@ -191,10 +191,6 @@ window.onload = function() {
   var LEFT_KEY = 37;
   var RIGHT_KEY = 39;
   document.onkeydown = function(event) {
-    // Shooting bullets -- here because can only have one document.onkeydown function
-    // if (event.keyCode === 32) {
-    //   shootBullet(10, 20);
-    // }
     switch (event.keyCode) {
       case LEFT_KEY:
         keysPressed.left = true;
