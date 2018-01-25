@@ -2,9 +2,17 @@
 
 Serious Game Rempart Vie
 
-25/01/2018 - 16:15
-V1.4 - News Ticker
+25/01/2018 - 17:40
+V1.5 - Earned points
 Edited files :
+
+* Components.js
+* Game.js
+* Dataset.js
+
+  25/01/2018 - 16:15
+  V1.4 - News Ticker
+  Edited files :
 
 * Components.js
 * Game.js

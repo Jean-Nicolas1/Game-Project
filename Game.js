@@ -1,4 +1,3 @@
-var score = 0;
 window.onload = function() {
   document.getElementById("start-button").onclick = function() {
     document.getElementById("title").style.display = "none";
@@ -20,6 +19,7 @@ window.onload = function() {
     myGameArea.myStocks = [];
     myGameArea.myBullets = [];
     myGameArea.myBarrel = ["bullet", "bullet", "bullet", "bullet"];
+    myGameArea.myPoints = [];
   }
 
   var myGameArea = {
@@ -27,6 +27,7 @@ window.onload = function() {
     myStocks: [],
     myBullets: [],
     myBarrel: [],
+    myPoints: [],
     frames: 0,
     drawCanvas: function() {
       this.canvas.width = 500; /*396 */
@@ -64,13 +65,6 @@ window.onload = function() {
         this.context.fillText(year.messageGeneration()[i], 20, myGameArea.canvas.height - 100 - 30 * i);
       }
     },
-    // displayInformationFlow: function() {
-    //   var textPosition = myGameArea.canvas.width;
-    //   var textSpeed = 3;
-    //   this.context.font = "20px serif";
-    //   this.context.fillStyle = "white";
-    //   this.context.fillText("Hello", textPosition - textSpeed, myGameArea.canvas.height - 22.5);
-    // },
     stop: function() {
       //...
     },
@@ -121,10 +115,22 @@ window.onload = function() {
       if (player.checkCatchStock(myGameArea.myStocks[i])) {
         if (myGameArea.myStocks[i].status === "short") {
           score -= myGameArea.myStocks[i].value;
-          myGameArea.context.fillText("-1", myGameArea.myStocks[i].x, myGameArea.myStocks[i].y);
+          myGameArea.myPoints.push({
+            points: "-" + myGameArea.myStocks[i].value,
+            x: player.x + player.width / 2 - 5,
+            y: player.y - 5,
+            color: "red",
+            ttl: ttl
+          });
         } else {
           score += myGameArea.myStocks[i].value;
-          myGameArea.context.fillText("+1", myGameArea.myStocks[i].x, myGameArea.myStocks[i].y);
+          myGameArea.myPoints.push({
+            points: "+" + myGameArea.myStocks[i].value,
+            x: player.x + player.width / 2 - 5,
+            y: player.y - 5,
+            color: "green",
+            ttl: ttl
+          });
         }
         myGameArea.myStocks.splice(i, 1);
       }
@@ -135,8 +141,22 @@ window.onload = function() {
         if (myGameArea.myBullets[j].checkKillStock(myGameArea.myStocks[i])) {
           if (myGameArea.myStocks[i].status === "short") {
             score += myGameArea.myStocks[i].value;
+            myGameArea.myPoints.push({
+              points: "+" + myGameArea.myStocks[i].value,
+              x: myGameArea.myStocks[i].x + year.size / 2,
+              y: myGameArea.myStocks[i].y + year.size / 2,
+              color: "green",
+              ttl: ttl
+            });
           } else {
             score -= myGameArea.myStocks[i].value;
+            myGameArea.myPoints.push({
+              points: "-" + myGameArea.myStocks[i].value,
+              x: myGameArea.myStocks[i].x + year.size / 2,
+              y: myGameArea.myStocks[i].y + year.size / 2,
+              color: "red",
+              ttl: ttl
+            });
           }
           myGameArea.myStocks.splice(i, 1);
           myGameArea.myBullets.splice(j, 1);
@@ -147,6 +167,13 @@ window.onload = function() {
     // Removing out of game stocks
     for (i = 0; i < myGameArea.myStocks.length; i++) {
       if (myGameArea.myStocks[i].checkOutOfGame(myGameArea.canvas.height - year.size - 45)) {
+        myGameArea.myPoints.push({
+          points: "-" + myGameArea.myStocks[i].value,
+          x: myGameArea.myStocks[i].x + year.size / 2,
+          y: myGameArea.myStocks[i].y + year.size / 2,
+          color: "red",
+          ttl: ttl
+        });
         myGameArea.myStocks.splice(i, 1);
         score -= 1;
       }
@@ -158,8 +185,13 @@ window.onload = function() {
         myGameArea.myBarrel.push("bullet");
       }
     }
+    // Removing points earned when ttl = 0
+    for (i = 0; i < myGameArea.myPoints.length; i++) {
+      if (myGameArea.myPoints[i].ttl === 0) {
+        myGameArea.myPoints.splice(i, 1);
+      }
+    }
     // Changing of years & stocks & message
-
     if (myGameArea.frames % 1200 === 0) {
       year = scenario[p % scenario.length];
       createMessage();
@@ -169,13 +201,11 @@ window.onload = function() {
     if (myGameArea.frames % 60 === 0 && myGameArea.frames !== 0) {
       createStocks(year.size, year.size, year.market, year.speed);
     }
-    // Creating message
-    // createMessage();
 
     // Clearing Canvas
     myGameArea.clear();
     // Drawing background --> disabled
-    // background.draw(myGameArea.context);
+    // -- background.draw(myGameArea.context);
 
     // Drawing header background
     myGameArea.context.fillStyle = "black";
@@ -189,12 +219,22 @@ window.onload = function() {
       stock.y += stock.speedY;
       stock.update(myGameArea.context);
     });
+
+    // Drawing earned points
+    myGameArea.myPoints.forEach(function(element) {
+      myGameArea.context.fillStyle = element.color;
+      myGameArea.context.fillText(element.points, element.x, element.y);
+    });
     // Write information flow
     message.x -= message.speed;
     message.update(myGameArea.context);
 
     // Incrementing frames
     myGameArea.frames += 1;
+    // Decrementing ttl (time to leave) of myPoints
+    myGameArea.myPoints.forEach(function(element) {
+      element.ttl -= 1;
+    });
     // Moving the player depending on key pressed
     Object.keys(keysPressed).forEach(function(direction) {
       if (keysPressed[direction]) {
@@ -207,7 +247,6 @@ window.onload = function() {
     myGameArea.displayScore();
     myGameArea.displayYear();
     myGameArea.displayStockInformation();
-    // myGameArea.displayInformationFlow();
     // Creating bullets
     document.onkeypress = function() {
       if (event.keyCode === 32 && myGameArea.myBarrel.length > 0) {

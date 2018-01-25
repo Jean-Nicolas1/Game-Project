@@ -88,7 +88,7 @@ function Bullet(bulletSpeed, source, x, y, width, height) {
     );
   };
   this.checkOutOfGame = function() {
-    return !(this.bottom() > 0);
+    return !(this.bottom() > 80);
   };
 }
 Bullet.prototype = Object.create(Component.prototype);

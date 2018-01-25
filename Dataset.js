@@ -1,6 +1,8 @@
 var background;
 var player;
 var message;
+var score = 0;
+var ttl = 30;
 var emphasisDictionary = {
   1: "",
   2: " très",
