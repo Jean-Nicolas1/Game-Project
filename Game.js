@@ -42,18 +42,35 @@ window.onload = function() {
       this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     },
     displayScore: function() {
-      this.context.font = "20px serif";
-      this.context.fillStyle = "black";
-      this.context.fillText("Score: " + score, 20, 30);
-      this.context.fillText("Année: " + year.name, myGameArea.canvas.width - 125, 30);
-      for (var i = 0; i < year.market.length; i++) {
-        this.context.fillText(year.messageGeneration()[i], 20, 60 + 30 * i);
-      }
-
-      // this.context.fillText(year.messageGeneration()[0], 20, 60);
-      // this.context.fillText(year.messageGeneration()[1], 20, 90);
-      // this.context.fillText(year.messageGeneration()[2], 20, 120);
+      this.context.font = "30px serif";
+      this.context.fillStyle = "white";
+      this.context.fillText("Score: " + score, 20, 35);
     },
+    displayYear: function() {
+      this.context.font = "30px serif";
+      this.context.fillStyle = "white";
+      this.context.fillText("Année: " + year.name, myGameArea.canvas.width - 170, 35);
+    },
+    displayStockInformation: function() {
+      this.context.font = "20px serif";
+      for (var i = 0; i < year.market.length; i++) {
+        var color;
+        if (year.market[i].status === "short") {
+          color = "red";
+        } else {
+          color = "green";
+        }
+        this.context.fillStyle = color;
+        this.context.fillText(year.messageGeneration()[i], 20, myGameArea.canvas.height - 100 - 30 * i);
+      }
+    },
+    // displayInformationFlow: function() {
+    //   var textPosition = myGameArea.canvas.width;
+    //   var textSpeed = 3;
+    //   this.context.font = "20px serif";
+    //   this.context.fillStyle = "white";
+    //   this.context.fillText("Hello", textPosition - textSpeed, myGameArea.canvas.height - 22.5);
+    // },
     stop: function() {
       //...
     },
@@ -72,7 +89,7 @@ window.onload = function() {
     var x =
       player.width / 4 +
       Math.min(myGameArea.canvas.width - player.width / 2 - width, Math.floor(Math.random() * myGameArea.canvas.width));
-    var y = 0;
+    var y = 50;
     var randomSector = Math.floor(Math.random() * market.length);
     myGameArea.myStocks.push(
       new Stock(
@@ -88,6 +105,10 @@ window.onload = function() {
     );
   }
 
+  function createMessage() {
+    message = new Message(myGameArea.canvas.width, myGameArea.canvas.height - 22.5, 1, year.info);
+  }
+
   function shootBullet(width, height) {
     var x = player.x + player.width / 2 - width / 2;
     var y = player.y;
@@ -100,8 +121,10 @@ window.onload = function() {
       if (player.checkCatchStock(myGameArea.myStocks[i])) {
         if (myGameArea.myStocks[i].status === "short") {
           score -= myGameArea.myStocks[i].value;
+          myGameArea.context.fillText("-1", myGameArea.myStocks[i].x, myGameArea.myStocks[i].y);
         } else {
           score += myGameArea.myStocks[i].value;
+          myGameArea.context.fillText("+1", myGameArea.myStocks[i].x, myGameArea.myStocks[i].y);
         }
         myGameArea.myStocks.splice(i, 1);
       }
@@ -123,7 +146,7 @@ window.onload = function() {
     }
     // Removing out of game stocks
     for (i = 0; i < myGameArea.myStocks.length; i++) {
-      if (myGameArea.myStocks[i].checkOutOfGame(myGameArea.canvas.height)) {
+      if (myGameArea.myStocks[i].checkOutOfGame(myGameArea.canvas.height - year.size - 45)) {
         myGameArea.myStocks.splice(i, 1);
         score -= 1;
       }
@@ -135,26 +158,41 @@ window.onload = function() {
         myGameArea.myBarrel.push("bullet");
       }
     }
-    // Changing of years stocks
+    // Changing of years & stocks & message
 
     if (myGameArea.frames % 1200 === 0) {
       year = scenario[p % scenario.length];
+      createMessage();
       p += 1;
     }
     // Positioning stocks
     if (myGameArea.frames % 60 === 0 && myGameArea.frames !== 0) {
       createStocks(year.size, year.size, year.market, year.speed);
     }
+    // Creating message
+    // createMessage();
 
     // Clearing Canvas
     myGameArea.clear();
     // Drawing background --> disabled
     // background.draw(myGameArea.context);
+
+    // Drawing header background
+    myGameArea.context.fillStyle = "black";
+    myGameArea.context.fillRect(0, 0, myGameArea.canvas.width, 60);
+    // Drawing ticker background
+    myGameArea.context.fillStyle = "#206FB6";
+    myGameArea.context.fillRect(0, myGameArea.canvas.height - 45, myGameArea.canvas.width, 35);
+
     // Drawing stocks
     myGameArea.myStocks.forEach(function(stock) {
       stock.y += stock.speedY;
       stock.update(myGameArea.context);
     });
+    // Write information flow
+    message.x -= message.speed;
+    message.update(myGameArea.context);
+
     // Incrementing frames
     myGameArea.frames += 1;
     // Moving the player depending on key pressed
@@ -165,8 +203,11 @@ window.onload = function() {
     });
     // Drawing the player
     player.update(myGameArea.context);
-    // Displaying score
+    // Displaying infos
     myGameArea.displayScore();
+    myGameArea.displayYear();
+    myGameArea.displayStockInformation();
+    // myGameArea.displayInformationFlow();
     // Creating bullets
     document.onkeypress = function() {
       if (event.keyCode === 32 && myGameArea.myBarrel.length > 0) {

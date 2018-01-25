@@ -1,5 +1,6 @@
 var background;
 var player;
+var message;
 var emphasisDictionary = {
   1: "",
   2: " très",
@@ -20,7 +21,8 @@ var year1 = {
       return `Le stock ${stock.name} se porte${emphasisDictionary[stock.value]} ${statusDictionary[stock.status]}`;
     };
     return stocks.map(mappingRule);
-  }
+  },
+  info: `Hello world we are in 2000!`
 };
 var year2 = {
   name: "2001",
@@ -29,14 +31,15 @@ var year2 = {
     { name: "AERONAUTIQUE", image: "./images/airplane.png", status: "short", value: 1 }
   ],
   size: 50,
-  speed: 2,
+  speed: 2.15,
   messageGeneration: function() {
     var stocks = this.market;
     var mappingRule = function(stock) {
       return `Le stock ${stock.name} se porte${emphasisDictionary[stock.value]} ${statusDictionary[stock.status]}`;
     };
     return stocks.map(mappingRule);
-  }
+  },
+  info: `Hello world we are in 2001!`
 };
 var year3 = {
   name: "2002",
@@ -45,14 +48,15 @@ var year3 = {
     { name: "AERONAUTIQUE", image: "./images/airplane.png", status: "long", value: 1 }
   ],
   size: 50,
-  speed: 2,
+  speed: 2.3,
   messageGeneration: function() {
     var stocks = this.market;
     var mappingRule = function(stock) {
       return `Le stock ${stock.name} se porte${emphasisDictionary[stock.value]} ${statusDictionary[stock.status]}`;
     };
     return stocks.map(mappingRule);
-  }
+  },
+  info: `Hello world we are in 2002!`
 };
 var year4 = {
   name: "2003",
@@ -61,14 +65,15 @@ var year4 = {
     { name: "AERONAUTIQUE", image: "./images/airplane.png", status: "short", value: 1 }
   ],
   size: 40,
-  speed: 2,
+  speed: 2.45,
   messageGeneration: function() {
     var stocks = this.market;
     var mappingRule = function(stock) {
       return `Le stock ${stock.name} se porte${emphasisDictionary[stock.value]} ${statusDictionary[stock.status]}`;
     };
     return stocks.map(mappingRule);
-  }
+  },
+  info: `Hello world we are in 2003!`
 };
 var year5 = {
   name: "2004",
@@ -77,14 +82,15 @@ var year5 = {
     { name: "AERONAUTIQUE", image: "./images/airplane.png", status: "short", value: 1 }
   ],
   size: 40,
-  speed: 3,
+  speed: 2.6,
   messageGeneration: function() {
     var stocks = this.market;
     var mappingRule = function(stock) {
       return `Le stock ${stock.name} se porte${emphasisDictionary[stock.value]} ${statusDictionary[stock.status]}`;
     };
     return stocks.map(mappingRule);
-  }
+  },
+  info: `Hello world we are in 2004!`
 };
 
 var year6 = {
@@ -95,14 +101,15 @@ var year6 = {
     { name: "AERONAUTIQUE", image: "./images/airplane.png", status: "long", value: 1 }
   ],
   size: 30,
-  speed: 5,
+  speed: 2.75,
   messageGeneration: function() {
     var stocks = this.market;
     var mappingRule = function(stock) {
       return `Le stock ${stock.name} se porte${emphasisDictionary[stock.value]} ${statusDictionary[stock.status]}`;
     };
     return stocks.map(mappingRule);
-  }
+  },
+  info: `Hello world we are in 2005!`
 };
 
 var scenario = [year1, year2, year3, year4, year5, year6];

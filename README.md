@@ -2,6 +2,14 @@
 
 Serious Game Rempart Vie
 
+25/01/2018 - 16:15
+V1.4 - News Ticker
+Edited files :
+
+* Components.js
+* Game.js
+* Dataset.js
+
 24/01/2018 - 20:20
 V1.3 - context changing - Dataset creation - displaying indo
 Edited files :
