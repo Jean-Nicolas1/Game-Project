@@ -155,6 +155,7 @@ window.onload = function() {
       if (player.checkCatchStock(myGameArea.myStocks[i])) {
         if (myGameArea.myStocks[i].status === "short") {
           score -= myGameArea.myStocks[i].value;
+          wrongSound.play();
           myGameArea.myPoints.push({
             points: "-" + myGameArea.myStocks[i].value,
             x: player.x + player.width / 2 - 5,
@@ -164,6 +165,7 @@ window.onload = function() {
           });
         } else {
           score += myGameArea.myStocks[i].value;
+          cashSound.play();
           myGameArea.myPoints.push({
             points: "+" + myGameArea.myStocks[i].value,
             x: player.x + player.width / 2 - 5,
@@ -181,6 +183,7 @@ window.onload = function() {
         if (myGameArea.myBullets[j].checkKillStock(myGameArea.myStocks[i])) {
           if (myGameArea.myStocks[i].status === "short") {
             score += myGameArea.myStocks[i].value;
+            cashSound.play();
             myGameArea.myPoints.push({
               points: "+" + myGameArea.myStocks[i].value,
               x: myGameArea.myStocks[i].x + year.size / 2,
@@ -190,6 +193,7 @@ window.onload = function() {
             });
           } else {
             score -= myGameArea.myStocks[i].value;
+            wrongSound.play();
             myGameArea.myPoints.push({
               points: "-" + myGameArea.myStocks[i].value,
               x: myGameArea.myStocks[i].x + year.size / 2,
@@ -216,6 +220,7 @@ window.onload = function() {
         });
         myGameArea.myStocks.splice(i, 1);
         score -= 1;
+        wrongSound.play();
       }
     }
     // Removing out of game bullets and reloading the barrel

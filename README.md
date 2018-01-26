@@ -2,6 +2,18 @@
 
 Serious Game Rempart Vie
 
+26/01/2018 - 16:00
+V1.6 - start et stop
+Edited files :
+
+* mixedpanel.js
+
+26/01/2018 - 14:00
+V1.7- Best scores
+Edited files :
+
+* Game.js
+
 26/01/2018 - 11:30
 V1.6 - start et stop
 Edited files :

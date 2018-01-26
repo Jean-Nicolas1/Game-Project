@@ -3,6 +3,8 @@ var player;
 var message;
 var score = 0;
 var ttl = 30;
+var cashSound = new Audio("./sounds/cash-register.mp3");
+var wrongSound = new Audio("./sounds/wrong-buzzer.wav");
 // Best score init
 if (localStorage.bestScore === undefined) {
   localStorage.bestScore = JSON.stringify({ name: "Anonymous", score: 0 });
