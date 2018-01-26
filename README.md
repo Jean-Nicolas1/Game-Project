@@ -2,6 +2,13 @@
 
 Serious Game Rempart Vie
 
+26/01/2018 - 11:30
+V1.5 - start et stop
+Edited files :
+
+* style.css
+* index.html
+
 25/01/2018 - 17:40
 V1.5 - Earned points
 Edited files :

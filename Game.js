@@ -1,6 +1,6 @@
 window.onload = function() {
   document.getElementById("start-button").onclick = function() {
-    document.getElementById("title").style.display = "none";
+    document.getElementById("main-page").style.display = "none";
     document.getElementById("game-board").style.display = "block";
     startGame();
   };
@@ -31,7 +31,7 @@ window.onload = function() {
     frames: 0,
     drawCanvas: function() {
       this.canvas.width = 500; /*396 */
-      this.canvas.height = 0.8 * screen.height;
+      this.canvas.height = 0.75 * screen.height;
       this.context = this.canvas.getContext("2d");
       document.getElementById("game-board").append(this.canvas);
     },
@@ -43,17 +43,17 @@ window.onload = function() {
       this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     },
     displayScore: function() {
-      this.context.font = "30px serif";
+      this.context.font = "30px helvetica";
       this.context.fillStyle = "white";
       this.context.fillText("Score: " + score, 20, 35);
     },
     displayYear: function() {
-      this.context.font = "30px serif";
+      this.context.font = "30px helvetica";
       this.context.fillStyle = "white";
-      this.context.fillText("Année: " + year.name, myGameArea.canvas.width - 170, 35);
+      this.context.fillText("Année: " + year.name, myGameArea.canvas.width - 190, 35);
     },
     displayStockInformation: function() {
-      this.context.font = "20px serif";
+      this.context.font = "20px helvetica";
       for (var i = 0; i < year.market.length; i++) {
         var color;
         if (year.market[i].status === "short") {
@@ -66,16 +66,39 @@ window.onload = function() {
       }
     },
     stop: function() {
-      //...
+      cancelAnimationFrame(this.reqAnimation);
+      p = 0;
+      this.gameOver();
     },
     gameOver: function() {
-      //...
+      var that = this;
+      this.clear();
+      this.drawFinalPoints();
+      setTimeout(function() {
+        that.restartGame();
+      }, 3000);
     },
     drawFinalPoints: function() {
-      //...
+      this.context.fillStyle = "#206FB6";
+      this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
+      this.context.font = "bold 30px Helvetica";
+      this.context.fillStyle = "white";
+      this.context.fillText("Fin du jeu", 170, 200);
+      this.context.font = "22px Helvetica";
+      this.context.fillStyle = "black";
+      this.context.fillText("Bravo " + name + ", ton score final est de", 50, 350);
+      this.context.font = "bold 30px Helvetica";
+      this.context.fillStyle = "black";
+      this.context.fillText(score + " points", 180, 400);
+      this.context.font = "bold 30px Helvetica";
+      this.context.fillStyle = "white";
+      this.context.fillText("Merci d'avoir joué!", 120, 550);
     },
     restartGame: function() {
-      //...
+      setTimeout(function() {
+        document.getElementById("game-board").style.display = "none";
+        document.getElementById("main-page").style.display = "block";
+      }, 1500);
     }
   };
 
@@ -110,6 +133,12 @@ window.onload = function() {
   }
 
   function updateGameArea() {
+    //Stop game
+    if (p === scenario.length + 1) {
+      myGameArea.stop();
+      return;
+    }
+
     // Removing catched stocks from array
     for (i = 0; i < myGameArea.myStocks.length; i++) {
       if (player.checkCatchStock(myGameArea.myStocks[i])) {
@@ -168,7 +197,7 @@ window.onload = function() {
     for (i = 0; i < myGameArea.myStocks.length; i++) {
       if (myGameArea.myStocks[i].checkOutOfGame(myGameArea.canvas.height - year.size - 45)) {
         myGameArea.myPoints.push({
-          points: "-" + myGameArea.myStocks[i].value,
+          points: "-1",
           x: myGameArea.myStocks[i].x + year.size / 2,
           y: myGameArea.myStocks[i].y + year.size / 2,
           color: "red",
@@ -223,6 +252,7 @@ window.onload = function() {
     // Drawing earned points
     myGameArea.myPoints.forEach(function(element) {
       myGameArea.context.fillStyle = element.color;
+      myGameArea.context.font = "bold 20px helvetica";
       myGameArea.context.fillText(element.points, element.x, element.y);
     });
     // Write information flow

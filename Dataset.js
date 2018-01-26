@@ -14,13 +14,13 @@ var statusDictionary = {
 };
 var year1 = {
   name: "2000",
-  market: [{ name: "AUTOMOBILE", image: "./images/car.png", status: "long", value: 1 }],
+  market: [{ name: "AUTOMOBILE", image: "./images/car.png", status: "long", value: 3 }],
   size: 50,
   speed: 2,
   messageGeneration: function() {
     var stocks = this.market;
     var mappingRule = function(stock) {
-      return `Le stock ${stock.name} se porte${emphasisDictionary[stock.value]} ${statusDictionary[stock.status]}`;
+      return `Le secteur ${stock.name} se porte${emphasisDictionary[stock.value]} ${statusDictionary[stock.status]}`;
     };
     return stocks.map(mappingRule);
   },
@@ -29,7 +29,7 @@ var year1 = {
 var year2 = {
   name: "2001",
   market: [
-    { name: "AUTOMOBILE", image: "./images/car.png", status: "long", value: 1 },
+    { name: "AUTOMOBILE", image: "./images/car.png", status: "long", value: 2 },
     { name: "AERONAUTIQUE", image: "./images/airplane.png", status: "short", value: 1 }
   ],
   size: 50,
@@ -37,7 +37,7 @@ var year2 = {
   messageGeneration: function() {
     var stocks = this.market;
     var mappingRule = function(stock) {
-      return `Le stock ${stock.name} se porte${emphasisDictionary[stock.value]} ${statusDictionary[stock.status]}`;
+      return `Le secteur ${stock.name} se porte${emphasisDictionary[stock.value]} ${statusDictionary[stock.status]}`;
     };
     return stocks.map(mappingRule);
   },
@@ -54,7 +54,7 @@ var year3 = {
   messageGeneration: function() {
     var stocks = this.market;
     var mappingRule = function(stock) {
-      return `Le stock ${stock.name} se porte${emphasisDictionary[stock.value]} ${statusDictionary[stock.status]}`;
+      return `Le secteur ${stock.name} se porte${emphasisDictionary[stock.value]} ${statusDictionary[stock.status]}`;
     };
     return stocks.map(mappingRule);
   },
@@ -71,7 +71,7 @@ var year4 = {
   messageGeneration: function() {
     var stocks = this.market;
     var mappingRule = function(stock) {
-      return `Le stock ${stock.name} se porte${emphasisDictionary[stock.value]} ${statusDictionary[stock.status]}`;
+      return `Le secteur ${stock.name} se porte${emphasisDictionary[stock.value]} ${statusDictionary[stock.status]}`;
     };
     return stocks.map(mappingRule);
   },
@@ -88,7 +88,7 @@ var year5 = {
   messageGeneration: function() {
     var stocks = this.market;
     var mappingRule = function(stock) {
-      return `Le stock ${stock.name} se porte${emphasisDictionary[stock.value]} ${statusDictionary[stock.status]}`;
+      return `Le secteur ${stock.name} se porte${emphasisDictionary[stock.value]} ${statusDictionary[stock.status]}`;
     };
     return stocks.map(mappingRule);
   },
@@ -107,13 +107,13 @@ var year6 = {
   messageGeneration: function() {
     var stocks = this.market;
     var mappingRule = function(stock) {
-      return `Le stock ${stock.name} se porte${emphasisDictionary[stock.value]} ${statusDictionary[stock.status]}`;
+      return `Le secteur ${stock.name} se porte${emphasisDictionary[stock.value]} ${statusDictionary[stock.status]}`;
     };
     return stocks.map(mappingRule);
   },
   info: `Hello world we are in 2005!`
 };
 
-var scenario = [year1, year2, year3, year4, year5, year6];
+var scenario = [year1, year2, year3];
 var year = scenario[0];
 var p = 0;

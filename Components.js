@@ -99,7 +99,7 @@ function Message(x, y, speed, text) {
   this.speed = speed;
   this.text = text;
   this.update = function(context) {
-    context.font = "20px serif";
+    context.font = "20px helvetica";
     context.fillStyle = "white";
     context.fillText(this.text, this.x, this.y);
   };
