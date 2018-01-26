@@ -3,7 +3,7 @@
 Serious Game Rempart Vie
 
 26/01/2018 - 11:30
-V1.5 - start et stop
+V1.6 - start et stop
 Edited files :
 
 * style.css

@@ -36,6 +36,7 @@ button[disabled] {
 
 #title {
   padding: 3% 0 0 0;
+  margin-bottom: 30px;
 }
 #title img {
   width: 50%;
@@ -57,8 +58,8 @@ button[disabled] {
 #goal {
   font-size: 30px;
   font-family: "Roboto", sans-serif;
-  margin-top: 20px;
-  margin-bottom: 30px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 input {

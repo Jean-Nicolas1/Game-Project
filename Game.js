@@ -31,7 +31,7 @@ window.onload = function() {
     frames: 0,
     drawCanvas: function() {
       this.canvas.width = 500; /*396 */
-      this.canvas.height = 0.75 * screen.height;
+      this.canvas.height = 0.8 * screen.height;
       this.context = this.canvas.getContext("2d");
       document.getElementById("game-board").append(this.canvas);
     },
