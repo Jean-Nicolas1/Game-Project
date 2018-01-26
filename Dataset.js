@@ -14,7 +14,7 @@ var statusDictionary = {
 };
 var year1 = {
   name: "2000",
-  market: [{ name: "AUTOMOBILE", image: "./images/car.png", status: "long", value: 3 }],
+  market: [{ name: "AUTOMOBILE", image: "./images/car.png", status: "long", value: 1 }],
   size: 50,
   speed: 2,
   messageGeneration: function() {
@@ -24,7 +24,7 @@ var year1 = {
     };
     return stocks.map(mappingRule);
   },
-  info: `Hello world we are in 2000!`
+  info: `Bienvenue dans mon jeu!!! Le premier niveau est très facile...`
 };
 var year2 = {
   name: "2001",
@@ -33,7 +33,7 @@ var year2 = {
     { name: "AERONAUTIQUE", image: "./images/airplane.png", status: "short", value: 1 }
   ],
   size: 50,
-  speed: 2.15,
+  speed: 2.5,
   messageGeneration: function() {
     var stocks = this.market;
     var mappingRule = function(stock) {
@@ -41,16 +41,17 @@ var year2 = {
     };
     return stocks.map(mappingRule);
   },
-  info: `Hello world we are in 2001!`
+  info: `Si on rajoute un secteur, c'est un peu plus dur... Mais c'est encore jouable!`
 };
 var year3 = {
   name: "2002",
   market: [
-    { name: "AUTOMOBILE", image: "./images/car.png", status: "short", value: 1 },
+    { name: "OIL & GAS", image: "./images/barrel.png", status: "long", value: 3 },
+    { name: "AUTOMOBILE", image: "./images/car.png", status: "short", value: 2 },
     { name: "AERONAUTIQUE", image: "./images/airplane.png", status: "long", value: 1 }
   ],
   size: 50,
-  speed: 2.3,
+  speed: 3,
   messageGeneration: function() {
     var stocks = this.market;
     var mappingRule = function(stock) {
@@ -58,7 +59,7 @@ var year3 = {
     };
     return stocks.map(mappingRule);
   },
-  info: `Hello world we are in 2002!`
+  info: `Ca va un peu plus vite non? Et encore un autre secteur... Ca devient compliqué!`
 };
 var year4 = {
   name: "2003",

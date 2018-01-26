@@ -6,7 +6,7 @@ $("#name").keyup(function() {
   }
 });
 
-var name = "";
+var playerName = "";
 $("#start-button").on("click", function() {
-  name = $("#name").prop("value");
+  playerName = $("#name").prop("value");
 });

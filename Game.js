@@ -68,6 +68,9 @@ window.onload = function() {
     stop: function() {
       cancelAnimationFrame(this.reqAnimation);
       p = 0;
+      if (score > JSON.parse(localStorage.bestScore).score) {
+        localStorage.bestScore = JSON.stringify({ name: playerName, score: score });
+      }
       this.gameOver();
     },
     gameOver: function() {
@@ -86,13 +89,21 @@ window.onload = function() {
       this.context.fillText("Fin du jeu", 170, 200);
       this.context.font = "22px Helvetica";
       this.context.fillStyle = "black";
-      this.context.fillText("Bravo " + name + ", ton score final est de", 50, 350);
+      this.context.fillText("Bravo " + playerName + ", ton score final est de", 100, 350);
       this.context.font = "bold 30px Helvetica";
       this.context.fillStyle = "black";
       this.context.fillText(score + " points", 180, 400);
+      this.context.font = "bold 24px Helvetica";
+      this.context.fillStyle = "black";
+      this.context.fillText(
+        JSON.parse(localStorage.bestScore).name + " a le meilleur score : " + JSON.parse(localStorage.bestScore).score,
+        50,
+        500
+      );
       this.context.font = "bold 30px Helvetica";
       this.context.fillStyle = "white";
       this.context.fillText("Merci d'avoir joué!", 120, 550);
+      score = 0;
     },
     restartGame: function() {
       setTimeout(function() {
