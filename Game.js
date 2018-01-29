@@ -20,8 +20,23 @@ window.onload = function() {
     myGameArea.myBullets = [];
     myGameArea.myBarrel = ["bullet", "bullet", "bullet", "bullet"];
     myGameArea.myPoints = [];
+    //mobile device -- should put it in Player Move function (Component.js)
+    if (window.DeviceMotionEvent) {
+      window.addEventListener(
+        "devicemotion",
+        function(event) {
+          player.x = Math.min(
+            myGameArea.canvas.width - player.width,
+            Math.max(0, player.x + event.accelerationIncludingGravity.x * 3)
+          );
+        },
+        false
+      );
+    } else {
+      console.log("The browser is not supporting devicemotion");
+    }
   }
-
+  //mobile device
   var myGameArea = {
     canvas: document.createElement("canvas"),
     myStocks: [],
@@ -31,9 +46,10 @@ window.onload = function() {
     frames: 0,
     drawCanvas: function() {
       this.canvas.width = 500; /*396 */
-      this.canvas.height = 0.8 * screen.height;
+      this.canvas.height = screen.availHeight;
       this.context = this.canvas.getContext("2d");
-      document.getElementById("game-board").append(this.canvas);
+      document.getElementById("game-board").append(this.canvas); // ------> not supported for IE
+      // $("#game-board").html(this.canvas);
     },
     start: function() {
       this.drawCanvas();
@@ -294,8 +310,14 @@ window.onload = function() {
     myGameArea.displayYear();
     myGameArea.displayStockInformation();
     // Creating bullets
-    document.onkeypress = function() {
-      if (event.keyCode === 32 && myGameArea.myBarrel.length > 0) {
+    // document.onkeypress = function(event) {
+    //   if (event.keyCode === 32 && myGameArea.myBarrel.length > 0) {
+    //     shootBullet(20, 20);
+    //     myGameArea.myBarrel.splice(0, 1);
+    //   }
+    // }; ---------------> Does not work in firefox!
+    document.onclick = function() {
+      if (myGameArea.myBarrel.length > 0) {
         shootBullet(20, 20);
         myGameArea.myBarrel.splice(0, 1);
       }
@@ -317,6 +339,13 @@ window.onload = function() {
   var LEFT_KEY = 37;
   var RIGHT_KEY = 39;
   document.onkeydown = function(event) {
+    //Necessary for working with firefox
+    //#######################################################
+    if (event.keyCode === 32 && myGameArea.myBarrel.length > 0) {
+      shootBullet(20, 20);
+      myGameArea.myBarrel.splice(0, 1);
+    }
+    //#######################################################
     switch (event.keyCode) {
       case LEFT_KEY:
         keysPressed.left = true;

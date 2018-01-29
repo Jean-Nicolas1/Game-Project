@@ -2,8 +2,12 @@
 
 Serious Game Rempart Vie
 
+v2.0 - mobile device - Bug correction Firefox
+
+V1.9 - sounds
+
 26/01/2018 - 16:00
-V1.6 - start et stop
+V1.8 - start et stop
 Edited files :
 
 * mixedpanel.js
