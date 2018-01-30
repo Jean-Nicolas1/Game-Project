@@ -3,8 +3,8 @@ var player;
 var message;
 var score = 0;
 var ttl = 30;
-var cashSound = new Audio("./sounds/cash-register.mp3");
-var wrongSound = new Audio("./sounds/wrong-buzzer.wav");
+var cashSound = new Audio("./sounds/coinbag.wav");
+var wrongSound = new Audio("./sounds/error.wav");
 // Best score init
 if (localStorage.bestScore === undefined) {
   localStorage.bestScore = JSON.stringify({ name: "Anonymous", score: 0 });
@@ -124,3 +124,27 @@ var year6 = {
 var scenario = [year1, year2, year3];
 var year = scenario[0];
 var p = 0;
+
+//getOS
+function getOS() {
+  var userAgent = window.navigator.userAgent,
+    platform = window.navigator.platform,
+    macosPlatforms = ["Macintosh", "MacIntel", "MacPPC", "Mac68K"],
+    windowsPlatforms = ["Win32", "Win64", "Windows", "WinCE"],
+    iosPlatforms = ["iPhone", "iPad", "iPod"],
+    os = null;
+
+  if (macosPlatforms.indexOf(platform) !== -1) {
+    os = "Mac OS";
+  } else if (iosPlatforms.indexOf(platform) !== -1) {
+    os = "iOS";
+  } else if (windowsPlatforms.indexOf(platform) !== -1) {
+    os = "Windows";
+  } else if (/Android/.test(userAgent)) {
+    os = "Android";
+  } else if (!os && /Linux/.test(platform)) {
+    os = "Linux";
+  }
+
+  return os;
+}

@@ -25,10 +25,17 @@ window.onload = function() {
       window.addEventListener(
         "devicemotion",
         function(event) {
-          player.x = Math.min(
-            myGameArea.canvas.width - player.width,
-            Math.max(0, player.x + event.accelerationIncludingGravity.x * 3)
-          );
+          if (getOS() === "iOS") {
+            player.x = Math.min(
+              myGameArea.canvas.width - player.width,
+              Math.max(0, player.x + event.accelerationIncludingGravity.x * 3)
+            );
+          } else {
+            player.x = Math.min(
+              myGameArea.canvas.width - player.width,
+              Math.max(0, player.x - event.accelerationIncludingGravity.x * 3)
+            );
+          }
         },
         false
       );
@@ -316,7 +323,7 @@ window.onload = function() {
     //     myGameArea.myBarrel.splice(0, 1);
     //   }
     // }; ---------------> Does not work in firefox!
-    document.onclick = function() {
+    document.getElementsByTagName("canvas")[0].onclick = function() {
       if (myGameArea.myBarrel.length > 0) {
         shootBullet(20, 20);
         myGameArea.myBarrel.splice(0, 1);

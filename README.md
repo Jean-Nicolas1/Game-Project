@@ -2,6 +2,8 @@
 
 Serious Game Rempart Vie
 
+v2.1 - bug correction on mobile (shoot & ios/Android acceleration inversion)
+
 v2.0 - mobile device - Bug correction Firefox
 
 V1.9 - sounds
