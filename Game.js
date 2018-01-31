@@ -168,7 +168,7 @@ window.onload = function() {
 
   function updateGameArea() {
     //Stop game -- scenario.length + 1
-    if (p === 0) {
+    if (p === scenario.length + 1) {
       myGameArea.stop();
       return;
     }
