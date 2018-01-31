@@ -131,7 +131,7 @@ window.onload = function() {
     restartGame: function() {
       setTimeout(function() {
         document.getElementById("game-board").style.display = "none";
-        document.getElementById("main-page").style.display = "flex";
+        document.getElementById("main-page").style.display = "block";
       }, 1500);
     }
   };
