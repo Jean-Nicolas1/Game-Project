@@ -116,13 +116,13 @@ window.onload = function() {
       this.context.font = "bold 30px Helvetica";
       this.context.fillStyle = "black";
       this.context.fillText(score + " points", 180, 400);
-      this.context.font = "bold 24px Helvetica";
-      this.context.fillStyle = "black";
-      this.context.fillText(
-        JSON.parse(localStorage.bestScore).name + " a le meilleur score : " + JSON.parse(localStorage.bestScore).score,
-        50,
-        500
-      );
+      // this.context.font = "bold 24px Helvetica";
+      // this.context.fillStyle = "black";
+      // this.context.fillText(
+      //   JSON.parse(localStorage.bestScore).name + " a le meilleur score : " + JSON.parse(localStorage.bestScore).score,
+      //   50,
+      //   500
+      // );
       this.context.font = "bold 30px Helvetica";
       this.context.fillStyle = "white";
       this.context.fillText("Merci d'avoir joué!", 120, 550);
@@ -131,7 +131,7 @@ window.onload = function() {
     restartGame: function() {
       setTimeout(function() {
         document.getElementById("game-board").style.display = "none";
-        document.getElementById("main-page").style.display = "block";
+        document.getElementById("main-page").style.display = "flex";
       }, 1500);
     }
   };
@@ -167,8 +167,8 @@ window.onload = function() {
   }
 
   function updateGameArea() {
-    //Stop game
-    if (p === scenario.length + 1) {
+    //Stop game -- scenario.length + 1
+    if (p === 0) {
       myGameArea.stop();
       return;
     }

@@ -5,10 +5,15 @@ var score = 0;
 var ttl = 30;
 var cashSound = new Audio("./sounds/coinbag.wav");
 var wrongSound = new Audio("./sounds/error.wav");
+
 // Best score init
 if (localStorage.bestScore === undefined) {
   localStorage.bestScore = JSON.stringify({ name: "Anonymous", score: 0 });
 }
+// Best score display
+$("#best-score").html('Meilleur score : <b id="score">' + JSON.parse(localStorage.bestScore).score) + "</b>";
+
+// Dictionaries
 var emphasisDictionary = {
   1: "",
   2: " très",
@@ -18,6 +23,8 @@ var statusDictionary = {
   long: "bien",
   short: "mal"
 };
+
+// Dataset
 var year1 = {
   name: "2000",
   market: [{ name: "AUTOMOBILE", image: "./images/car.png", status: "long", value: 1 }],

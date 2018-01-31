@@ -19,7 +19,6 @@ body button {
   border: 0;
   box-shadow: 0;
   border-radius: 5px;
-  margin: 20px 0px;
 }
 
 button:disabled,
@@ -35,28 +34,23 @@ button[disabled] {
 }
 
 #title {
-  padding: 3% 0 0 0;
-  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
 }
 #title img {
   width: 50%;
 }
-#instructions img {
-  width: 10%;
-  height: 50%;
-  margin-right: 8%;
-  margin-bottom: 10%;
-  margin-top: 10px;
-}
 
 #the-game {
-  font-size: 40px;
+  font-size: 30px;
   font-family: "Roboto", sans-serif;
   text-transform: uppercase;
 }
 
 #goal {
-  font-size: 30px;
+  font-size: 25px;
   font-family: "Roboto", sans-serif;
   margin-top: 10px;
   margin-bottom: 10px;
@@ -82,19 +76,62 @@ canvas {
     width: 98vw;
     height: 95vh;
   }
-}
-
-#instructions {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
+  #main-page {
+    max-width: none;
+    max-height: none;
+    width: 98vw;
+    height: 95vh;
+  }
 }
 
 #main-page {
   display: flex;
-  justify-content: space-between;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: space-around;
   flex-wrap: wrap;
   flex-direction: column;
+  height: 98vh;
+  width: 458px;
+  max-width: 98vw;
+  border: 8px solid black;
+  border-radius: 20px;
+  margin-top: 1vh;
+  padding: 30px 26px;
+}
+
+#form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  margin-bottom: 50px;
+}
+
+#disclaimer {
+  font-style: italic;
+}
+#website {
+  font-weight: bold;
+}
+
+#link {
+  font-size: 20px;
+  color: #206fb6;
+}
+#best-score {
+  margin-top: 10px;
+  font-size: 15px;
+  font-weight: bold;
+}
+#score {
+  font-size: 25px;
+}
+
+/* #instructions {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 }
 
 #instructions p {
@@ -102,12 +139,12 @@ canvas {
   font-family: "Roboto", sans-serif;
   text-transform: uppercase;
   margin-top: 20px;
-}
+} */
 
-#form {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  height: 10%;
-}
+/* #instructions img {
+  width: 10%;
+  height: 50%;
+  margin-right: 8%;
+  /* margin-bottom: 10%;
+  margin-top: 10px; */
+/* } */
