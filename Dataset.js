@@ -93,7 +93,7 @@ var year4 = {
     };
     return stocks.map(mappingRule);
   },
-  info: `                          Pas mal du tout! Je pense que tu as compris le principe du jeu. Attention, si un stock, même mauvais, sort du jeux tu perds un point`
+  info: `                          Pas mal du tout! Je pense que tu as compris le principe du jeu. Attention, si un stock, même mauvais, sort du jeu tu perds un point`
 };
 var year5 = {
   name: "2005",
