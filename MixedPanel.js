@@ -18,9 +18,13 @@ try {
 } catch (e) {
   console.log("CATCH", e);
 }
-mixpanel.time_event("Click"); // Start a chronometer for "Click"
-document.addEventListener("click", function() {
-  mixpanel.track("Click"); // Track "Click"
-  mixpanel.time_event("Click"); // Start a new chronometer for "Click"
-});
+mixpanel.time_event("Event"); // Start a chronometer for "Event"
+
+function mixpanelStopAndStart() {
+  mixpanel.track("Event"); // Track "Event"
+  mixpanel.time_event("Event"); // Start a new chronometer for "Event"
+}
+
+document.addEventListener("click", mixpanelStopAndStart);
+document.addEventListener("keydown", mixpanelStopAndStart);
 // End Mixpanel tracking

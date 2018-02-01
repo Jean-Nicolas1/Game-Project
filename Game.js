@@ -7,6 +7,8 @@ window.onload = function() {
 
   function startGame() {
     myGameArea.start();
+    p = 0;
+    year = scenario[0];
     background = new Background("./images/OLD/bg.jpg", myGameArea.canvas.width, myGameArea.canvas.height, 3);
     player = new Player(
       8,
@@ -92,7 +94,6 @@ window.onload = function() {
     },
     stop: function() {
       cancelAnimationFrame(this.reqAnimation);
-      p = 0;
       if (score > JSON.parse(localStorage.bestScore).score) {
         localStorage.bestScore = JSON.stringify({ name: playerName, score: score });
       }

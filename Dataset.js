@@ -417,30 +417,30 @@ var year22 = {
 var scenario = [
   year0,
   year1,
-  year2,
-  year3,
-  year4,
-  year5,
-  year6,
-  year7,
-  year8,
-  year9,
-  year10,
-  year11,
-  year12,
-  year13,
-  year14,
-  year15,
-  year16,
-  year17,
-  year18,
-  year19,
-  year20,
-  year21,
-  year22
+  year2 //,
+  // year3,
+  // year4,
+  // year5,
+  // year6,
+  // year7,
+  // year8,
+  // year9,
+  // year10,
+  // year11,
+  // year12,
+  // year13,
+  // year14,
+  // year15,
+  // year16,
+  // year17,
+  // year18,
+  // year19,
+  // year20,
+  // year21,
+  // year22
 ];
-var year = scenario[0];
-var p = 0;
+var year;
+var p;
 
 //getOS
 function getOS() {
@@ -466,21 +466,21 @@ function getOS() {
   return os;
 }
 
-var yearM = {
-  name: "2005",
-  market: [
-    { name: "OIL & GAS", image: "./images/barrel.png", status: "short", value: 1 },
-    { name: "AUTOMOBILE", image: "./images/car.png", status: "short", value: 1 },
-    { name: "AERONAUTIQUE", image: "./images/airplane.png", status: "long", value: 1 }
-  ],
-  size: 30,
-  speed: 2.75,
-  messageGeneration: function() {
-    var stocks = this.market;
-    var mappingRule = function(stock) {
-      return `Le secteur ${stock.name} se porte${emphasisDictionary[stock.value]} ${statusDictionary[stock.status]}`;
-    };
-    return stocks.map(mappingRule);
-  },
-  info: `Hello world we are in 2005!`
-};
+// var yearM = {
+//   name: "2005",
+//   market: [
+//     { name: "OIL & GAS", image: "./images/barrel.png", status: "short", value: 1 },
+//     { name: "AUTOMOBILE", image: "./images/car.png", status: "short", value: 1 },
+//     { name: "AERONAUTIQUE", image: "./images/airplane.png", status: "long", value: 1 }
+//   ],
+//   size: 30,
+//   speed: 2.75,
+//   messageGeneration: function() {
+//     var stocks = this.market;
+//     var mappingRule = function(stock) {
+//       return `Le secteur ${stock.name} se porte${emphasisDictionary[stock.value]} ${statusDictionary[stock.status]}`;
+//     };
+//     return stocks.map(mappingRule);
+//   },
+//   info: `Hello world we are in 2005!`
+// };
