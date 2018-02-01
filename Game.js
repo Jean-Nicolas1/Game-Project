@@ -77,15 +77,17 @@ window.onload = function() {
     },
     displayStockInformation: function() {
       this.context.font = "20px helvetica";
-      for (var i = 0; i < year.market.length; i++) {
-        var color;
-        if (year.market[i].status === "short") {
-          color = "red";
-        } else {
-          color = "green";
+      if (year.market.length > 0) {
+        for (var i = 0; i < year.market.length; i++) {
+          var color;
+          if (year.market[i].status === "short") {
+            color = "red";
+          } else {
+            color = "green";
+          }
+          this.context.fillStyle = color;
+          this.context.fillText(year.messageGeneration()[i], 20, myGameArea.canvas.height - 100 - 30 * i);
         }
-        this.context.fillStyle = color;
-        this.context.fillText(year.messageGeneration()[i], 20, myGameArea.canvas.height - 100 - 30 * i);
       }
     },
     stop: function() {
@@ -129,9 +131,12 @@ window.onload = function() {
       score = 0;
     },
     restartGame: function() {
+      // Best score display
+
       setTimeout(function() {
         document.getElementById("game-board").style.display = "none";
         document.getElementById("main-page").style.display = "block";
+        $("#best-score").html('Meilleur score : <b id="score">' + JSON.parse(localStorage.bestScore).score) + "</b>";
       }, 1500);
     }
   };
@@ -142,22 +147,24 @@ window.onload = function() {
       Math.min(myGameArea.canvas.width - player.width / 2 - width, Math.floor(Math.random() * myGameArea.canvas.width));
     var y = 50;
     var randomSector = Math.floor(Math.random() * market.length);
-    myGameArea.myStocks.push(
-      new Stock(
-        speed,
-        market[randomSector].image,
-        x,
-        y,
-        width,
-        height,
-        market[randomSector].status,
-        market[randomSector].value
-      )
-    );
+    if (market.length > 0) {
+      myGameArea.myStocks.push(
+        new Stock(
+          speed,
+          market[randomSector].image,
+          x,
+          y,
+          width,
+          height,
+          market[randomSector].status,
+          market[randomSector].value
+        )
+      );
+    }
   }
 
   function createMessage() {
-    message = new Message(myGameArea.canvas.width, myGameArea.canvas.height - 22.5, 1, year.info);
+    message = new Message(myGameArea.canvas.width, myGameArea.canvas.height - 22.5, 1.5, year.info);
   }
 
   function shootBullet(width, height) {

@@ -2,6 +2,8 @@
 
 Serious Game Rempart Vie
 
+v2.3 - 23 years dataset
+
 v2.2 - Main page enhancement
 
 v2.1 - bug correction on mobile (shoot & ios/Android acceleration inversion)
